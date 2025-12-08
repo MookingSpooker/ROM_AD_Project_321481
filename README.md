@@ -35,7 +35,7 @@ The first experiment of EDA that we did was generally looking how the data is st
 - After cleaning the database and inputing all the missing values we created a merge section to combine all the data into one table. This benefited us as it allowed for all the data to be in one table for us to access. Also for future use of out project for the creation of a recommendation system having all the data in one table is beneficiary.
 
 - Plotting/Statistical Evaluation Section:
-- In this section we plotted the most valuable information from the dataset. Like `top_movies`, most engagement for the year of release of movies, and overall rating bias. This is valuable information for context on the data and also recommendation in the future. It showcases the best movies that have to have high interactions, and the year of release with the most engagement.
+- In this section we plotted the most valuable information from the dataset. Like `top_movies`, most engagement for the `year_of_release` of movies, and overall rating bias. This is valuable information for context on the data and also recommendation in the future. It showcases the best movies that have to have high interactions, and the year of release with the most engagement.
 
 - Modeling:
 
