@@ -11,6 +11,8 @@ Our project is to clean and analize data from the viewer_interactions database. 
 ## Methods
 - Python 3.11
 - Libraries: pandas, numpy, matplotlib, seaborn, scikit-learn
+- Data Used: 'viewer_interaction.db'; Link to download: https://my.luiss.it/pluginfile.php/87173/mod_folder/content/0/viewer_interactions.db?forcedownload=1
+- Algorithms used on data: KMeans++, Hierarchical Clustering, GMM (Gaussian Mixture Models), DBSCAN 
 - Reproducability:
 
 ## Experimental Design
