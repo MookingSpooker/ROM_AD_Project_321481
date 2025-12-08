@@ -6,11 +6,11 @@
 - Giacomo Mazzarella: 321931
 
 ## Introduction
-Our project is to clean and analize data from the viewer_interactions database. We clean the data by calculating missing data and also explore patterns and valuable statistics on the data. we primarily looked at the movie and user statistics to uncover patterns. The main goal of identify user/movie segments via clustering, explore rating biases, and visualize movie clusters by popularity and quality.
+The goal of this project is to identify user and movie relationships using clustering models. We start by by calculating as many missing values as possible and removing any unusable data. Once our data is clean, we look at the movie and user statistics seperately. We use various clustering models to explore relationships and uncover patterns. We then plot our clustered data to visually analyze the relationships, and look at each cluster individually to better understand what criteria the algorithm is clustering by.
 
 ## Methods
 - Python 3.11
-- Libraries: pandas, numpy, matplotlib, seaborn, scikit-learn
+- Libraries: pandas, numpy, matplotlib, seaborn, scikit-learn, datetime, scipy, sqlite3
 - Data Used: 'viewer_interaction.db'; Link to download: https://my.luiss.it/pluginfile.php/87173/mod_folder/content/0/viewer_interactions.db?forcedownload=1
 - Valuable website for viewing .db files (mainly for navigation and full visualization):
 - https://inloop.github.io/sqlite-viewer/
@@ -23,23 +23,24 @@ Our project is to clean and analize data from the viewer_interactions database. 
 Describe any experiments you conducted to demonstrate/validate the target contribution(s) of your project;
 
 The first experiment of EDA that we did was generally looking how the data is structured:
-- we did this through viewing the data base to understand what we are looking at.
+- We loaded the data into a SQL viewer to look at how are data is structured.
 
 - First Interpretation:
-- we realized that there are a lot of missing data within the database, so we created a diagnostics tab to check what percentages of missing data are in each column. From this we realized there was a large significance of data missing from the database, too much to drop the missing values.
+- we realized that there are a lot of missing data within the database, so we created a diagnostics tab to check what percentages of missing data are in each column. From this we realized there was a large significance of data missing from the database. Dropping these values would result in a lot of data loss.
 
 - Calculations Section:
-- We created two sections to calculate and input the missing values and input them back into the database. One section for `movie_statistics` table and one for the `user_statistics` table. These were realistically the most important tables in terms for the creation of statistical analysis.
+- Realizing that a lot of these missing values can be calculated, we created two sections to calculate and input the missing values. One section for `movie_statistics` table and one for the `user_statistics` table. These two tables contained the bulk of our data that we would be using in our models, so we mainly focused on recovering data for these two tables.
 
 - Mergering Section:
-- After cleaning the database and inputing all the missing values we created a merge section to combine all the data into one table. This benefited us as it allowed for all the data to be in one table for us to access. Also for future use of out project for the creation of a recommendation system having all the data in one table is beneficiary.
+- After cleaning the database and inputing all the missing values wherever possible, we created a merge section to combine all the data into one table. This made the data easier to work with as it was all in one place. During the merge we dropped any row with missing values meaning that we could ensure that there were no missing values in any of the categories for each data entry. Having the data the data in this format means that it is also prepared ford for future use in a recommendation system.
 
 - Plotting/Statistical Evaluation Section:
-- In this section we plotted the most valuable information from the dataset. Like `top_movies`, most engagement for the `year_of_release` of movies, and overall rating bias. This is valuable information for context on the data and also recommendation in the future. It showcases the best movies that have to have high interactions, and the year of release with the most engagement.
+- In this section we plotted the most valuable information from the dataset against each other. This allowed us to better visualize the data and gain insights on how metrics changed over time.
 
 - Modeling:
 
-We selected features based on EDA: for users, `user_total_ratings` and `activity_days` to capture engagement; for movies, `movie_avg_rating`, `movie_std_rating`, `movie_total_ratings`, `year_of_release` to capture quality, variability, and popularity.
+We selected features based on EDA: for users, `user_total_ratings` and `activity_days` to capture engagement; for movies, `movie_avg_rating`, `movie_std_rating`, `movie_total_ratings`, `movie_min_rating`, and `movie_max_rating` to capture quality, variability, and popularity.
+
 indicate the following for each experiment:
 • The main purpose: 1-2 sentence high-level explanation
 • Baseline(s): describe the method(s) that you used to compare
