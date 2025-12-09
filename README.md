@@ -48,23 +48,54 @@ Varience and Standerd Deviation on user and movie features:
   - Through this method we were able to determine the most useful features in both movies and user features. We concluded for `user_features` that the most variate features are `user_total_ratings` and `activity_days`. Another varible that had a higher STD rating was `unique_movies` but we found that this data is heavily corilated to `user_total_ratings` as they are the same. We concluded for `movie_features` that the most variate feature was `movie_total_ratings` and that there was a high corrilation between `movie_total_ratings` and `unique_users` so we decided to drop `unique_users`.
 
 Normal distribution test:
+**add Figure**
 - Main purpose:
   - We needed to check this for the validity of GMM clustering model and also the overall performance of other clustering models like K-Means and Hierarcical clustering and DBSCAN
 - Evaluation:
   - All the data from both movies and user features are not normally distributed, this automatically rules out the use of GMM clustering models and also tells us that K-means and Hierarchical clustering will also stuggle slightly from this fact.
  
 Kernel Density Estimation Test (KDE):
+**add figure**
 - Main Purpose:
   - KDE reveals whether the data forms distinct dense regions (potential clusters) or whether it is one continuous mass with no meaningful separation.
 - Evaluation:
   - We came to the conclusion from this test that the data is in a massive blob with very dense clusters on the x-axis. We assumed from the start that this would make it benefical for DBSCAN but we plotted the data points to showcase what these clusters of data would look like. We came to the conclusion that K-Means would end up working better than DBSCAN because of the fact that there is a lot of overlapping data. We also plotted the 'user_features' with the two most important features on a KDE graph and came to the conclusion that the data forms one single, long, pointed banana shape. This means we have a curved cluster. This shape means that for a clustering method like K-means that tries to group data in a spherical fasion it will not be able to preform well on this data.
+
+KNN Statistics test:
+- Main purpose:
+  - Checks whether the dataset has natural cluster structure by analyzing how close each point is to its neighbors. If real clusters exist, points inside a cluster should have similar and small neighbor distances, while points between clusters should have larger distances.
+- Evaluation:
+  - User Features Analysis Mean of mean distances: 0.027 Std of mean distances: 0.205, These statistics indicate a highly variable density in the user feature space. The low overall mean suggests that, on average, users are closely packed in dense regions. However, the standard deviation is disproportionately (high) pointing to diversity in the data. This means that there is a presence of dense clusters alongside sparser regions or outliers. These variations validate the use of density-based clustering like DBSCAN over uniform-assumption methods like K-Means.
+  - Movie Features Analysis
+  - Mean of mean distances: 0.150, Std of mean distances: 0.207. For movies, the mean is higher than for users, indicating generally sparser packed movies. The standard deviation is comparable in absolute terms but lower relative to the mean, suggesting more uniform density overall compared to users. This implies fewer extreme variations in local neighborhoods, with movies forming somewhat consistent groups. This means algoritms like K-means, and hierarchical clustering could work well here.
  
+Distance Distribution Test (only on movie features - user features were too expensive):
+**add figure**
+- Main purpose:
+  - Helps to understand how all points in the dataset relate to each other in terms of distance. It checks whether the dataset contains distinct separation gaps (which would indicate clusters) or if distances form one continuous distribution (which suggests no clear cluster structure).
+- Evaluation:
+  - The resulting distribution is extremely narrow and heavily concentrated between 0 and ~6–8, with an abrupt drop-off and almost no distances beyond ~15–20. This is a classic signature of the **curse of dimensionality**: in high-dimensional spaces, even randomly distributed points appear surprisingly close to each other under Euclidean distance. The lack of spread in distances dramatically reduces the meaningfulness of distance-based methods like K-Means, hierarchical clustering with average/ward linkage, and especially DBSCAN.
+ 
+Hopkins Test:
+- Main purpose:
+   - Is there actually any meaningful clustering structure in my data, or is it just random uniform noise
+- Evaluation:
+   - Our scores for both user and movie features were above 0.9 which means that out data has: Very strong clustering tendency making it perfect for clustering.
+ 
+Cumulative Explained Variance Test:
+**add figure**
+- Main purpose:
+  - To understand how much of the dataset’s total variance can be captured with a reduced number of principal components. This helps evaluate whether the data is high-dimensional with complex structure, or whether most variation lies in just a few directions (which often indicates redundancy or low intrinsic dimensionality).
+- Evaluation:
+  - We concluded from this test that it is not dimensionally complex as it shows in the number majority of our data can be explained at 3 dimensions (principle components). 
+  - Most fo the data is located in the first 3 dimensions:
+  - Explained variance ratio: [0.492 0.298 0.193 0.014 0.003]
+  - Cumulative: [0.492 0.79  0.984 0.997 1.   ]
+  - The cumulative varience ratio shows us that at 3 dimensions majority of out data is showcased (0.984 = 98.4%). The reason this is important because it means for algorithms like K-means it will be able to handle this data more easily.
 
 
 
 
-- Calculations deviation and colinearity between features. We did this to find out the best features to train our model on, as we wouldn't use points that we highly corrilated, and we wanted to find the most significant features to avoid bloat.
-- When picking the models that we wanted to use for our data, one of the tests that we carried out was checking if the features were linearly distributed. This is important because this factor can effect the effectivness of models and also it rulled out the use of GMM model.
 
 Experiment 1: Optimal Cluster Number Determination
 
