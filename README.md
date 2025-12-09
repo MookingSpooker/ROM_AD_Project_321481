@@ -75,10 +75,10 @@ Results – Describe the following:
 #### K-means ++ 
 
 - On movie data, We found through the elbow method that the most optimal amount of clusters was 4. These clusters from looking at them were mainly spit based on `total_ratings` and `average_ratings`. We concluded this in every cluster (cluster number based on index)
-  - Cluster 0: contains unpopular movies (low total ratings) with high `average_ratings` with a total of 3248 elements in that cluster
-  - Cluster 1: contains unpopular movies (low total ratings) with lower `average_ratings` with a total of 4434 elements in that cluster
-  - CLuster 2: contains top selling movies (Highest total ratings) with High `average_ratings` with a total of 19 elements in that cluster
-  - Cluster 3: contains average movies (medium to high total ratings) with average `average_ratings` with a total of 3028 elements in that cluster
+  - Cluster 0: contains unpopular movies (low `total_ratings`) with high `average_ratings` with a total of 3248 elements in that cluster
+  - Cluster 1: contains unpopular movies (low `total_ratings`) with lower `average_ratings` with a total of 4434 elements in that cluster
+  - CLuster 2: contains top selling movies (highest `total_ratings`) with High `average_ratings` with a total of 19 elements in that cluster
+  - Cluster 3: contains average movies (medium to high `total_ratings`) with average `average_ratings` with a total of 3028 elements in that cluster
 
 - Explanation for the smallest cluster
    - These 19 data points are the most interacted top seller movies. The reason that they are in there own cluster is because there `total_ratings` and `average_ratings` are significantly higher than the rest of the other movies. We also show case the data without the cluster to see if it changes an of the shapes of the other clusters but it does not. We decided to keep this cluster in because we think that these 19 movies are valuable data points. As an example if this decoded audience is used for a recommendation system then these 19 moivies are perfect for cold start or a recommendation that has a very low likely hood of not being valid.
