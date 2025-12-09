@@ -37,9 +37,52 @@ Mergering Section:
 Plotting/Statistical Evaluation Section:
 - In this section we plotted the most valuable information from the dataset against each other. This allowed us to better visualize the data and gain insights on how metrics changed over time.
 
-Model Considerations:
+Model Considerations/Validity testing:
+
+Experiments done on merged data `movie_features` and `user_features`
+
+Varience and Standerd Deviation on user and movie features:
+- Main purpose:
+  - To identify which `user-level` and `movie-level` variables contain the most meaningful information for clustering. Because the user dataset is extremely large, we need to reduce the feature space to only the variables that meaningfully contribute to differences between users.
+- Evaluation:
+  - Through this method we were able to determine the most useful features in both movies and user features. We concluded for `user_features` that the most variate features are `user_total_ratings` and `activity_days`. Another varible that had a higher STD rating was `unique_movies` but we found that this data is heavily corilated to `user_total_ratings` as they are the same. We concluded for `movie_features` that the most variate feature was `movie_total_ratings` and that there was a high corrilation between `movie_total_ratings` and `unique_users` so we decided to drop `unique_users`.
+
+Normal distribution test:
+- Main purpose:
+  - We needed to check this for the validity of GMM clustering model and also the overall performance of other clustering models like K-Means and Hierarcical clustering and DBSCAN
+- Evaluation:
+  - All the data from both movies and user features are not normally distributed, this automatically rules out the use of GMM clustering models and also tells us that K-means and Hierarchical clustering will also stuggle slightly from this fact.
+ 
+Kernel Density Estimation Test (KDE):
+- Main Purpose:
+  - KDE reveals whether the data forms distinct dense regions (potential clusters) or whether it is one continuous mass with no meaningful separation.
+- Evaluation:
+  - We came to the conclusion from this test that the data is in a massive blob with very dense clusters on the x-axis. We assumed from the start that this would make it benefical for DBSCAN but we plotted the data points to showcase what these clusters of data would look like. We came to the conclusion that K-Means would end up working better than DBSCAN because of the fact that there is a lot of overlapping data. We also plotted the 'user_features' with the two most important features on a KDE graph and came to the conclusion that the data forms one single, long, pointed banana shape. This means we have a curved cluster. This shape means that for a clustering method like K-means that tries to group data in a spherical fasion it will not be able to preform well on this data.
+ 
+
+
+
+
 - Calculations deviation and colinearity between features. We did this to find out the best features to train our model on, as we wouldn't use points that we highly corrilated, and we wanted to find the most significant features to avoid bloat.
 - When picking the models that we wanted to use for our data, one of the tests that we carried out was checking if the features were linearly distributed. This is important because this factor can effect the effectivness of models and also it rulled out the use of GMM model.
+
+Experiment 1: Optimal Cluster Number Determination
+
+Main Purpose: Identify the ideal number of clusters that balances compactness and separation to reveal distinct viewer behaviors (e.g., casual vs. avid raters).
+Baseline(s): Default K-Means with k=2 (minimal partitioning) and random initialization.
+Evaluation Metric(s): Within-cluster sum of squares (WSS) via elbow method for compactness, and silhouette score (range -1 to 1) for cluster quality—chosen because it measures both cohesion and separation without requiring labels, ideal for unsupervised tasks.
+
+Experiment 2: Algorithm Comparison
+
+Main Purpose: Compare clustering algorithms to find the most interpretable model for user grouping, assessing robustness to noise and high dimensionality.
+Baseline(s): K-Means with default parameters (e.g., k=3, Euclidean distance).
+Evaluation Metric(s): Silhouette score for overall quality, and Davies-Bouldin index (lower is better) for minimal overlap—selected to quantify how well clusters represent natural groupings in viewer data.
+
+Experiment 3: Dimensionality Reduction Impact
+
+Main Purpose: Evaluate how PCA/TSNE affects clustering visualization and performance, ensuring low-dimensional projections preserve behavioral patterns.
+Baseline(s): Clustering on raw scaled features without reduction.
+Evaluation Metric(s): Silhouette score post-reduction, and visual inspection via 2D plots—used to confirm that reduced dimensions maintain cluster integrity for interpretability.
 
 ### Modeling:
 
